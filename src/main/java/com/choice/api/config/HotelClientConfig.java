@@ -7,12 +7,14 @@ import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 
 @Configuration
 public class HotelClientConfig {
+
   @Bean
   public Jaxb2Marshaller marshaller() {
     Jaxb2Marshaller marshaller = new Jaxb2Marshaller();
     marshaller.setContextPath("com.choice.api.gen");
     return marshaller;
   }
+
   @Bean
   public HotelClient countryClient(Jaxb2Marshaller marshaller) {
     HotelClient hotelClient = new HotelClient();

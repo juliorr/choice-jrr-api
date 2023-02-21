@@ -19,9 +19,8 @@ public class HotelClient extends WebServiceGatewaySupport implements HotelClient
     GetHotelRequest request = new GetHotelRequest();
     request.setId(id);
 
-    GetHotelResponse response = (GetHotelResponse) getWebServiceTemplate()
+    return (GetHotelResponse) getWebServiceTemplate()
         .marshalSendAndReceive(request);
-    return response;
   }
 
   public GetListResponse getList(int page, int size) {
@@ -29,9 +28,8 @@ public class HotelClient extends WebServiceGatewaySupport implements HotelClient
     request.setPage(page);
     request.setSize(size);
 
-    GetListResponse response = (GetListResponse) getWebServiceTemplate()
+    return (GetListResponse) getWebServiceTemplate()
         .marshalSendAndReceive(request);
-    return response;
   }
 
   public CreateHotelResponse add(Hotel hotel) {
@@ -41,26 +39,23 @@ public class HotelClient extends WebServiceGatewaySupport implements HotelClient
     request.setRating(hotel.getRating());
     request.getAmenities().addAll(hotel.getAmenities());
 
-    CreateHotelResponse response = (CreateHotelResponse) getWebServiceTemplate()
+    return (CreateHotelResponse) getWebServiceTemplate()
         .marshalSendAndReceive(request);
-    return response;
   }
 
   public UpdateHotelResponse update(Hotel hotel) {
     UpdateHotelRequest request = new UpdateHotelRequest();
     request.setHotel(hotel);
 
-    UpdateHotelResponse response = (UpdateHotelResponse) getWebServiceTemplate()
+    return (UpdateHotelResponse) getWebServiceTemplate()
         .marshalSendAndReceive(request);
-    return response;
   }
 
   public DeleteHotelResponse delete(int id) {
     DeleteHotelRequest request = new DeleteHotelRequest();
     request.setId(id);
 
-    DeleteHotelResponse response = (DeleteHotelResponse) getWebServiceTemplate()
+    return (DeleteHotelResponse) getWebServiceTemplate()
         .marshalSendAndReceive(request);
-    return response;
   }
 }
