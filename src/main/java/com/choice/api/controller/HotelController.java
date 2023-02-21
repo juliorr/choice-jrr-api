@@ -1,6 +1,6 @@
 package com.choice.api.controller;
 
-import com.choice.api.client.HotelClient;
+import com.choice.api.client.HotelClientInterface;
 import com.choice.api.gen.CreateHotelResponse;
 import com.choice.api.gen.DeleteHotelResponse;
 import com.choice.api.gen.GetListResponse;
@@ -18,9 +18,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class HotelController {
 
-  private final HotelClient hotelClient;
+  private final HotelClientInterface hotelClient;
 
-  public HotelController(HotelClient hotelClient) {
+  public HotelController(HotelClientInterface hotelClient) {
     this.hotelClient = hotelClient;
   }
 
