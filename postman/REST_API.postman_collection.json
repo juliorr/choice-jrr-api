@@ -1,0 +1,428 @@
+{
+	"info": {
+		"_postman_id": "58e546ca-4b53-477b-95a3-34fdbfc20a3c",
+		"name": "REST API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "618473"
+	},
+	"item": [
+		{
+			"name": "Get Hotel",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const responseJson = pm.response.json();;",
+							"console.log(responseJson);",
+							"",
+							"pm.test(\"Status code is 200\", () => {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Verify the HotelData\", function () { ",
+							"    pm.expect(responseJson.id).to.be.a(\"number\");",
+							"    pm.expect(responseJson.name).to.be.a(\"string\");",
+							"    pm.expect(responseJson.address).to.be.a(\"string\");",
+							"    pm.expect(responseJson.rating).to.be.a(\"number\");",
+							"    pm.expect(responseJson.amenities).to.be.an(\"array\");",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/hotel/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"hotel",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Hotel Error",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const responseJson = pm.response.json();",
+							"console.log(responseJson);",
+							"",
+							"pm.test(\"Status code is 400\", () => {",
+							"    pm.response.to.have.status(400);",
+							"});",
+							"",
+							"pm.test(\"Verify the error\", function () { ",
+							"    pm.expect(responseJson.code).to.be.equal(1000);",
+							"    pm.expect(responseJson.message).to.include(\"Item  does not exist with id\");",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/hotel/99999999",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"hotel",
+						"99999999"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Hotel List",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const responseJson = pm.response.json();;",
+							"console.log(responseJson);",
+							"",
+							"pm.test(\"Status code is 200\", () => {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Verify the HotelData\", function () { ",
+							"    pm.expect(responseJson.size).to.be.a(\"number\");",
+							"    pm.expect(responseJson.page).to.be.a(\"number\");",
+							"    pm.expect(responseJson.totalPages).to.be.a(\"number\");",
+							"    pm.expect(responseJson.totalElements).to.be.a(\"number\");",
+							"    pm.expect(responseJson.hotels).to.be.an(\"array\");",
+							"    pm.expect(responseJson.hotels).not.be.empty;",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/hotel?page=0&size=2",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"hotel"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "0"
+						},
+						{
+							"key": "size",
+							"value": "2"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Hotel List Error",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const responseJson = pm.response.json();;",
+							"console.log(responseJson);",
+							"",
+							"pm.test(\"Status code is 200\", () => {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Verify the default response\", function () { ",
+							"    pm.expect(responseJson.size).to.be.a(\"number\");",
+							"    pm.expect(responseJson.page).to.be.a(\"number\");",
+							"    pm.expect(responseJson.totalPages).to.be.a(\"number\");",
+							"    pm.expect(responseJson.totalElements).to.be.a(\"number\");",
+							"    pm.expect(responseJson.hotels).to.be.an(\"array\");",
+							"    pm.expect(responseJson.hotels).be.empty;",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/hotel?page=100000&size=1000",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"hotel"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "100000"
+						},
+						{
+							"key": "size",
+							"value": "1000"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Hotel",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const responseJson = pm.response.json().hotel;",
+							"console.log(responseJson);",
+							"",
+							"pm.test(\"Status code is 200\", () => {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Verify the HotelData\", function () { ",
+							"    pm.expect(responseJson.id).to.be.a(\"number\");",
+							"    pm.expect(responseJson.name).to.be.a(\"string\");",
+							"    pm.expect(responseJson.address).to.be.a(\"string\");",
+							"    pm.expect(responseJson.rating).to.be.a(\"number\");",
+							"    pm.expect(responseJson.amenities).to.be.an(\"array\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Hotel add from rest\",\n    \"address\": \"Union 1\",\n    \"rating\": 1,\n    \"amenities\": [\n        {\n            \"id\": 1\n        },\n        {\n            \"id\": 2\n        }\n    ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/api/hotel",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"hotel"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Hotel Error",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const responseJson = pm.response.json();",
+							"console.log(responseJson);",
+							"",
+							"pm.test(\"Status code is 400\", () => {",
+							"    pm.response.to.have.status(400);",
+							"});",
+							"",
+							"pm.test(\"Verify the error\", function () { ",
+							"    pm.expect(responseJson.code).to.be.equal(3000);",
+							"    pm.expect(responseJson.message).to.include(\"Check your request\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Hotel add from rest\",\n    \"address\": \"Union 1\",\n    \"rating\": julio,\n    \"amenities\": [\n        {\n            \"id\": 1\n        },\n        {\n            \"id\": 2\n        }\n    ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/api/hotel",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"hotel"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const responseJson = pm.response.json().hotel;",
+							"console.log(responseJson);",
+							"",
+							"pm.test(\"Status code is 200\", () => {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Verify the HotelData\", function () { ",
+							"    pm.expect(responseJson.id).to.be.a(\"number\");",
+							"    pm.expect(responseJson.name).to.be.a(\"string\");",
+							"    pm.expect(responseJson.address).to.be.a(\"string\");",
+							"    pm.expect(responseJson.rating).to.be.a(\"number\");",
+							"    pm.expect(responseJson.amenities).to.be.an(\"array\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": 32,\n    \"name\": \"Hotel add from rest\",\n    \"address\": \"Union 1\",\n    \"rating\": 1,\n    \"amenities\": [\n        {\n            \"id\": 1\n        },\n        {\n            \"id\": 2\n        }\n    ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/api/hotel",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"hotel"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New Request Error",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const responseJson = pm.response.json();",
+							"console.log(responseJson);",
+							"",
+							"pm.test(\"Status code is 400\", () => {",
+							"    pm.response.to.have.status(400);",
+							"});",
+							"",
+							"pm.test(\"Verify the error\", function () { ",
+							"    pm.expect(responseJson.code).to.be.equal(1000);",
+							"    pm.expect(responseJson.message).to.include(\"Item  does not exist with id\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": 99999,\n    \"name\": \"Hotel add from rest\",\n    \"address\": \"Union 1\",\n    \"rating\": 1,\n    \"amenities\": [\n        {\n            \"id\": 1\n        },\n        {\n            \"id\": 2\n        }\n    ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/api/hotel",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"hotel"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/hotel/31",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"hotel",
+						"31"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

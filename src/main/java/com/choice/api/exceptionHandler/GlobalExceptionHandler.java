@@ -1,5 +1,6 @@
 package com.choice.api.exceptionHandler;
 
+import com.fasterxml.jackson.core.JsonParseException;
 import java.net.ConnectException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -26,4 +27,14 @@ public class GlobalExceptionHandler {
     String message = "Something was wrong, Try again in some minutes";
     return new ApiError(code, message);
   }
+
+  @ExceptionHandler({JsonParseException.class})
+  @ResponseStatus(HttpStatus.BAD_REQUEST)
+  public ApiError jsonError(JsonParseException ex) {
+
+    int code = 3000;
+    String message = "Check your request";
+    return new ApiError(code, message);
+  }
+  //
 }
