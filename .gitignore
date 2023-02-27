@@ -34,3 +34,7 @@ build/
 
 ### Maven ####
 .mvn/
+mvnw*
+
+
+src/main/java/com/choice/api/gen/
