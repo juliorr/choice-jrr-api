@@ -5,6 +5,7 @@ import com.choice.api.gen.CreateHotelResponse;
 import com.choice.api.gen.DeleteHotelResponse;
 import com.choice.api.gen.GetListResponse;
 import com.choice.api.gen.Hotel;
+import com.choice.api.gen.SearchByNameResponse;
 import com.choice.api.gen.UpdateHotelResponse;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,7 +30,7 @@ public class HotelController {
     return hotelClient.get(id).getHotel();
   }
 
-  @GetMapping("/hotel")
+  @GetMapping("/hotels")
   public GetListResponse getList(@RequestParam int page, @RequestParam int size) {
     return hotelClient.getList(page, size);
   }
@@ -47,5 +48,10 @@ public class HotelController {
   @DeleteMapping("/hotel/{id}")
   public DeleteHotelResponse delete(@PathVariable("id") Integer id) {
     return hotelClient.delete(id);
+  }
+
+  @GetMapping("/hotel")
+  public SearchByNameResponse search(@RequestParam String search, @RequestParam int page, @RequestParam int size) {
+    return hotelClient.search(search, page, size);
   }
 }

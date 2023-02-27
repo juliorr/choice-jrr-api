@@ -5,6 +5,7 @@ import com.choice.api.gen.DeleteHotelResponse;
 import com.choice.api.gen.GetHotelResponse;
 import com.choice.api.gen.GetListResponse;
 import com.choice.api.gen.Hotel;
+import com.choice.api.gen.SearchByNameResponse;
 import com.choice.api.gen.UpdateHotelResponse;
 
 public interface HotelClientInterface {
@@ -18,4 +19,6 @@ public interface HotelClientInterface {
   UpdateHotelResponse update(Hotel hotel);
 
   DeleteHotelResponse delete(int id);
+
+  SearchByNameResponse search(String search, int page, int size);
 }

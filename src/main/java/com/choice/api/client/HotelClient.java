@@ -9,6 +9,8 @@ import com.choice.api.gen.GetHotelResponse;
 import com.choice.api.gen.GetListRequest;
 import com.choice.api.gen.GetListResponse;
 import com.choice.api.gen.Hotel;
+import com.choice.api.gen.SearchByNameRequest;
+import com.choice.api.gen.SearchByNameResponse;
 import com.choice.api.gen.UpdateHotelRequest;
 import com.choice.api.gen.UpdateHotelResponse;
 import org.springframework.ws.client.core.support.WebServiceGatewaySupport;
@@ -56,6 +58,16 @@ public class HotelClient extends WebServiceGatewaySupport implements HotelClient
     request.setId(id);
 
     return (DeleteHotelResponse) getWebServiceTemplate()
+        .marshalSendAndReceive(request);
+  }
+
+  public SearchByNameResponse search(String search, int page, int size) {
+    SearchByNameRequest request = new SearchByNameRequest();
+    request.setName(search);
+    request.setPage(page);
+    request.setSize(size);
+
+    return (SearchByNameResponse) getWebServiceTemplate()
         .marshalSendAndReceive(request);
   }
 }
